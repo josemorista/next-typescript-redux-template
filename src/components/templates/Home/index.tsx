@@ -1,19 +1,19 @@
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../../redux";
-import { getHighlights } from "../../../redux/products/creators";
+import { AppState } from "../../../redux";
+import { fetchProducts } from "../../../redux/products/reducer";
 import { HomeStyles } from "./styles";
 
 export const Home: FC = () => {
 
-	const highlights = useSelector((state: IRootState) => state.products.highlights);
+	const { highlights } = useSelector((state: AppState) => state.products);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getHighlights());
+		dispatch(fetchProducts("test"));
 	}, [dispatch]);
 
 	return <HomeStyles.Container>
-		{highlights.map(el => <h1 key={el.name}>{el.name}</h1>)}
+		{highlights.map((el, i) => (<h1 key={i}>{el}</h1>))}
 	</HomeStyles.Container>;
 };

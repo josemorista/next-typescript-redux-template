@@ -9,6 +9,11 @@ const Container = styled.main`
 
 		min-height: 16rem;
 
+		background-image: url("/img/png/home-hero.png");
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: bottom right;
+
 		> h4 {
 			color: white;
 			max-width: 15rem;

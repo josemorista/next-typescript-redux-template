@@ -1,9 +1,9 @@
 import { ThemeProvider } from "styled-components";
-import { storeWrapper } from "../redux";
+import { wrapper } from "../redux";
 import { GlobalStyles } from "../styles/global";
 import { theme } from "../styles/theme";
 
-function MyApp({ Component, pageProps }: any) {
+function App({ Component, pageProps }: any) {
 	return <>
 		<GlobalStyles />
 		<ThemeProvider theme={theme}>
@@ -12,4 +12,4 @@ function MyApp({ Component, pageProps }: any) {
 	</>;
 }
 
-export default storeWrapper.withRedux(MyApp);
+export default wrapper.withRedux(App);

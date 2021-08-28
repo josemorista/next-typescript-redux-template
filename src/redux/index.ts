@@ -1,18 +1,16 @@
-import { createStore, applyMiddleware, Action } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunkMiddleware from "redux-thunk";
-import { reducers } from "./reducers";
-import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
+import { productsReducer } from "./products/reducer";
 
-export interface IHydrateAction extends Action {
-	type: typeof HYDRATE;
-	payload: any;
-}
+const makeStore = () =>
+	configureStore({
+		reducer: {
+			[productsReducer.name]: productsReducer.reducer,
+		}
+	});
 
-export type IRootState = ReturnType<typeof reducers>;
+export type AppStore = ReturnType<typeof makeStore>;
+export type AppState = ReturnType<AppStore['getState']>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
 
-const initStore = (initialState: any) => {
-	return createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
-};
-
-export const storeWrapper = createWrapper(initStore, { debug: false });
+export const wrapper = createWrapper<AppStore>(makeStore);

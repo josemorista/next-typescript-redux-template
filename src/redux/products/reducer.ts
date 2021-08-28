@@ -1,22 +1,39 @@
-import { IProduct } from "../../domain/modules/products/entities/IProduct";
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
-import { IProductsAction, ProductsActionsTypes } from "./types";
+import { AppThunk } from "..";
 
 interface IProductsState {
-	highlights: Array<IProduct>;
+	highlights: Array<string>;
 }
 
-const initialState = {
+const initialState: IProductsState = {
 	highlights: []
 };
 
-export const productsReducer = (state: IProductsState = initialState, action: IProductsAction): IProductsState => {
-	switch (action.type) {
-		case HYDRATE:
-			return { ...state, ...action.payload.products };
-		case ProductsActionsTypes.SET_HIGHLIGHTS:
-			return { ...state, highlights: action.payload };
-		default:
-			return state;
+export const productsReducer = createSlice({
+	name: "products",
+	initialState,
+	reducers: {
+		setHighlights(state, action) {
+			state.highlights = action.payload
+		}
+	},
+	extraReducers: {
+		[HYDRATE]: (state, action) => {
+			console.log('HYDRATE', state, action.payload);
+			return {
+				...state,
+				...action.payload.products,
+			};
+		},
 	}
+});
+
+export const { setHighlights } = productsReducer.actions;
+
+export const fetchProducts = (category: string): AppThunk => async dispatch => {
+	await (new Promise(resolve => setTimeout(resolve, 3000)));
+	dispatch(
+		setHighlights([category]),
+	);
 };
