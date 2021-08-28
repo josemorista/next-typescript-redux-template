@@ -1,9 +1,9 @@
 {
-	"name": "agrofrontend",
+	"name": "next-typescript-redux-template",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev:web": "next dev",
+		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"

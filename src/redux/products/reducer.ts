@@ -14,8 +14,8 @@ export const productsReducer = (state: IProductsState = initialState, action: IP
 	switch (action.type) {
 		case HYDRATE:
 			return { ...state, ...action.payload.products };
-		case ProductsActionsTypes.GET_HIGHLIGHTS:
-			return { ...state, highlights: [] };
+		case ProductsActionsTypes.SET_HIGHLIGHTS:
+			return { ...state, highlights: action.payload };
 		default:
 			return state;
 	}
